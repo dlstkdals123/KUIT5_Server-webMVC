@@ -28,21 +28,7 @@ public class ListUserController extends HttpServlet {
 
         User user = (User) value;
 
-        Enumeration<String> paramNames = req.getParameterNames();
-        if (!paramNames.hasMoreElements()) {
-            System.out.println("파라미터가 없습니다.");
-        } else {
-            System.out.println("=== 요청 파라미터 목록 ===");
-            while (paramNames.hasMoreElements()) {
-                String paramName = paramNames.nextElement();
-                String paramValue = req.getParameter(paramName);
-                System.out.println(paramName + ": " + paramValue);
-            }
-        }
-
-        String inputUserId = (String) req.getParameter("userId");
-
-        if (!inputUserId.equals(user.getUserId())) {
+        if (!req.getParameter("userId").equals(user.getUserId())) {
             resp.sendRedirect("/user/login.jsp");
             return;
         }
