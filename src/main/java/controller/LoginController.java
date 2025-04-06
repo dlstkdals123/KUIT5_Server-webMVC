@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/user/login")
@@ -19,10 +20,13 @@ public class LoginController extends HttpServlet {
         String password = req.getParameter("password");
 
         User user = MemoryUserRepository.getInstance().findUserById(userId);
-        if (user == null || !user.getPassword().equals(password))
+        if (user == null || !user.getPassword().equals(password)) {
             resp.sendRedirect("/user/login_failed.jsp");
+            return;
+        }
 
-        req.getSession().setAttribute("user", user);
+        HttpSession session = req.getSession();
+        session.setAttribute("user", user);
         req.getRequestDispatcher("/home.jsp").forward(req, resp);
     }
 }
