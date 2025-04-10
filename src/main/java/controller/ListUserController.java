@@ -19,19 +19,10 @@ public class ListUserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Object value = session.getAttribute("user");
-        if (value == null) {
+        if (session.getAttribute("user") == null) {
             resp.sendRedirect("/user/login.jsp");
             return;
         }
-
-        User user = (User) value;
-
-        if (!req.getParameter("userId").equals(user.getUserId())) {
-            resp.sendRedirect("/user/login.jsp");
-            return;
-        }
-
 
         Collection<User> users = MemoryUserRepository.getInstance().findAll();
         req.setAttribute("users", users);

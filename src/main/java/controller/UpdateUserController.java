@@ -22,6 +22,6 @@ public class UpdateUserController extends HttpServlet {
         User oldUser = MemoryUserRepository.getInstance().findUserById(user.getUserId());
         oldUser.update(user);
 
-        resp.sendRedirect("/user/userList?userId="+user.getUserId());
+        resp.sendRedirect("/user/userList");
     }
 }
